@@ -1,0 +1,56 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@std/assert@^1.0.13": "1.0.13",
+    "jsr:@std/cli@^1.0.17": "1.0.17",
+    "jsr:@std/internal@^1.0.6": "1.0.6",
+    "jsr:@std/path@^1.0.9": "1.0.9",
+    "jsr:@unielit/enumi@^1.0.1": "1.0.1",
+    "npm:imagescript@^1.3.0": "1.3.0",
+    "npm:neverthrow@^8.2.0": "8.2.0"
+  },
+  "jsr": {
+    "@std/assert@1.0.13": {
+      "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/cli@1.0.17": {
+      "integrity": "e15b9abe629e17be90cc6216327f03a29eae613365f1353837fa749aad29ce7b"
+    },
+    "@std/internal@1.0.6": {
+      "integrity": "9533b128f230f73bd209408bb07a4b12f8d4255ab2a4d22a1fd6d87304aca9a4"
+    },
+    "@std/path@1.0.9": {
+      "integrity": "260a49f11edd3db93dd38350bf9cd1b4d1366afa98e81b86167b4e3dd750129e"
+    },
+    "@unielit/enumi@1.0.1": {
+      "integrity": "493ea57b350f1e17515e7386794b1d7d6221698fbe6b6331ce6dfe828dc8622a"
+    }
+  },
+  "npm": {
+    "@rollup/rollup-linux-x64-gnu@4.29.1": {
+      "integrity": "sha512-87xYCwb0cPGZFoGiErT1eDcssByaLX4fc0z2nRM6eMtV9njAfEE6OW3UniAoDhX4Iq5xQVpE6qO9aJbCFumKYQ=="
+    },
+    "imagescript@1.3.0": {
+      "integrity": "sha512-lCYzQrWzdnA68K03oMj/BUlBJrVBnslzDOgGFymAp49NmdGEJxGeN7sHh5mCva0nQkq+kkKSuru2zLf1m04+3A=="
+    },
+    "neverthrow@8.2.0": {
+      "integrity": "sha512-kOCT/1MCPAxY5iUV3wytNFUMUolzuwd/VF/1KCx7kf6CutrOsTie+84zTGTpgQycjvfLdBBdvBvFLqFD2c0wkQ==",
+      "dependencies": [
+        "@rollup/rollup-linux-x64-gnu"
+      ]
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@^1.0.13",
+      "jsr:@std/cli@^1.0.17",
+      "jsr:@std/path@^1.0.9",
+      "jsr:@unielit/enumi@^1.0.1",
+      "npm:imagescript@^1.3.0",
+      "npm:neverthrow@^8.2.0"
+    ]
+  }
+}
