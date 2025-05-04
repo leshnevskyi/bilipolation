@@ -6,13 +6,15 @@ import { enumi } from "@unielit/enumi";
 
 import { normalizeError, ErrorCode } from "./error.ts";
 import { logger } from "./logger.ts";
-import { resizeImage } from "./image-resizer.ts";
+import { resizeImage } from "./image-resizer/mod.ts";
+import { Stopwatch } from "./stopwatch.ts";
+import { validatePositiveNumber } from "./validation.ts";
 
 if (import.meta.main) {
-  const CliArg = enumi("out-file", "scale");
+  const CliArg = enumi("out-file", "scale", "processors");
 
   const args = parseArgs(Deno.args, {
-    string: [CliArg.OutFile, CliArg.Scale],
+    string: [CliArg.OutFile, CliArg.Scale, CliArg.Processors],
   });
 
   const sourceFilePath = args._.at(0)?.toString();
@@ -55,15 +57,22 @@ if (import.meta.main) {
     Deno.exit(ErrorCode.InvalidArgs);
   }
 
-  const scale = parseFloat(scaleArg);
+  const scale = Number.parseFloat(scaleArg);
+  const scaleValidationResult = validatePositiveNumber(scale);
 
-  if (isNaN(scale)) {
-    logger.error("Invalid scale: Must be number");
+  if (scaleValidationResult.isErr()) {
+    logger.error(`Invalid scale: ${scaleValidationResult.error}`);
     Deno.exit(ErrorCode.InvalidArgs);
   }
 
-  if (scale <= 0) {
-    logger.error("Invalid scale: Number must be positive");
+  const processorsArg = args[CliArg.Processors];
+  const processorCount = processorsArg ? Number.parseFloat(processorsArg) : 1;
+  const processorCountValidationResult = validatePositiveNumber(processorCount);
+
+  if (processorCountValidationResult.isErr()) {
+    logger.error(
+      `Invalid number of processors: ${processorCountValidationResult.error}`
+    );
     Deno.exit(ErrorCode.InvalidArgs);
   }
 
@@ -97,7 +106,9 @@ if (import.meta.main) {
     Deno.exit(ErrorCode.Generic);
   }
 
-  const imageResizingResult = resizeImage(image, scale);
+  const stopwatch = new Stopwatch({ startImmediately: true });
+  const imageResizingResult = await resizeImage(image, scale, processorCount);
+  logger.info(`Resizing took ${Math.round(stopwatch.stop())}ms`);
 
   if (imageResizingResult.isErr()) {
     logger.error(imageResizingResult.error);
